@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#102b46">
+    <title>Bhutanese Sign Language Recognition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css', v='4') }}">
+    <script src="{{ url_for('static', filename='js/app.js', v='4') }}" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="hero">
+        <p class="eyebrow">BHUTANESE SIGN LANGUAGE</p>
+        <h1>Sign recognition,<br>made simple.</h1>
+        <p class="hero-copy">Show a digit sign to your camera. The page adapts to your phone or computer automatically.</p>
+        <div class="device-note"><span class="status-dot"></span> Camera selected automatically by your browser</div>
+      </header>
+
+      <section class="workspace" aria-label="Sign recognition">
+        <div class="camera-column">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">LIVE RECOGNITION</p>
+              <h2>Show a hand sign</h2>
+            </div>
+            <span class="badge">Digits 0–9</span>
+          </div>
+
+          <div class="camera-frame" id="camera-frame">
+            <video id="camera" autoplay muted playsinline aria-label="Live camera preview"></video>
+            <div class="camera-placeholder" id="camera-placeholder">
+              <div class="camera-icon" aria-hidden="true">◎</div>
+              <p>Your camera preview will appear here</p>
+              <span>Place one hand in view with good lighting</span>
+            </div>
+            <span class="live-indicator" id="live-indicator" hidden><span></span> LIVE</span>
+          </div>
+
+          <div class="controls">
+            <button class="button button-primary" id="camera-button" type="button">Enable camera</button>
+            <button class="button button-secondary" id="stop-button" type="button" disabled>Stop camera</button>
+          </div>
+          <p class="camera-help" id="camera-help">Allow camera access when your browser asks. You don't need to select a phone or laptop camera.</p>
+        </div>
+
+        <aside class="result-column">
+          <p class="eyebrow">RECOGNITION RESULT</p>
+          <div class="result-card" id="result" role="status" aria-live="polite">
+            <span class="result-label">PREDICTION</span>
+            <strong id="prediction">Waiting for camera</strong>
+            <span id="confidence">Start the camera to begin.</span>
+          </div>
+          <div class="status-card" id="model-status" role="status">Checking recognition model…</div>
+          <div class="divider"><span>OR USE AN IMAGE</span></div>
+          <label class="upload-button" for="image-input">Choose an image instead</label>
+          <input id="image-input" class="visually-hidden" type="file" accept="image/png,image/jpeg,image/webp">
+          <p class="fine-print">Image stays in this session and is sent to the recognition server for processing.</p>
+        </aside>
+      </section>
+      <footer>For best results, use a clear, well-lit view of one hand.</footer>
+    </main>
+  </body>
+</html>
