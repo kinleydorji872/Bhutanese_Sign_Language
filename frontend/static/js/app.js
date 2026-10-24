@@ -14,6 +14,7 @@ let captureTimer;
 let cameraTimeout;
 let isSendingFrame = false;
 let modelAvailable = false;
+let modelError = "The digits model is not available on the server.";
 let cameraRequestId = 0;
 
 function showStatus(message, isError = false) {
@@ -127,6 +128,8 @@ async function captureFrame() {
     prediction.textContent = "Recognition unavailable";
     confidence.textContent = error.message;
     if (error.message.includes("No trained") || error.message.includes("TensorFlow")) {
+      modelAvailable = false;
+      modelError = error.message;
       showStatus(error.message, true);
       stopCamera();
       return;
@@ -199,7 +202,7 @@ async function startCamera() {
       scheduleFrame();
     } else {
       prediction.textContent = "Camera is ready";
-      confidence.textContent = "Add a trained digits model to enable sign predictions.";
+      confidence.textContent = modelError;
     }
   } catch (error) {
     window.clearTimeout(cameraTimeout);
@@ -264,12 +267,14 @@ fetch("/api/health")
     return response.json();
   })
   .then((data) => {
-    modelAvailable = Boolean(data.models?.digits?.available);
+    const digitsModel = data.models?.digits;
+    modelAvailable = Boolean(digitsModel?.available);
+    modelError = digitsModel?.error || "The digits model is not available on the server.";
     if (window.isSecureContext && navigator.mediaDevices?.getUserMedia) {
       showStatus(
         modelAvailable
           ? "Digits model ready. Camera frames are processed for predictions."
-          : "No trained digits model found. Train a model and save it under models/ to enable recognition.",
+          : modelError,
         !modelAvailable,
       );
     }
@@ -277,6 +282,9 @@ fetch("/api/health")
       prediction.textContent = "Looking for a sign…";
       confidence.textContent = "Hold one digit sign clearly in the camera view.";
       scheduleFrame();
+    } else if (!modelAvailable && cameraStream) {
+      prediction.textContent = "Model unavailable";
+      confidence.textContent = modelError;
     }
   })
   .catch((error) => showStatus(error.message, true));

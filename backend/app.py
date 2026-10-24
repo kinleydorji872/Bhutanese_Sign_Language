@@ -49,16 +49,27 @@ def index():
 
 @app.get("/api/health")
 def health():
+    models = {}
+    for mode in ("digits", "alphabet"):
+        try:
+            model, _labels = load_model(mode)
+        except RuntimeError as exc:
+            models[mode] = {"available": False, "error": str(exc)}
+        else:
+            if model is None:
+                models[mode] = {
+                    "available": False,
+                    "error": (
+                        f"No trained {mode} model found on this server. "
+                        f"Expected models/{mode}.keras and models/{mode}_labels.json."
+                    ),
+                }
+            else:
+                models[mode] = {"available": True}
     return jsonify(
         {
             "status": "ok",
-            "models": {
-                mode: {
-                    "available": (MODEL_DIR / f"{mode}.keras").is_file()
-                    and (MODEL_DIR / f"{mode}_labels.json").is_file()
-                }
-                for mode in ("digits", "alphabet")
-            },
+            "models": models,
         }
     )
 
