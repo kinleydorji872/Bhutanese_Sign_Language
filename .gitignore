@@ -5,6 +5,7 @@ venv/
 .env
 .DS_Store
 models/*.keras
+!models/digits.keras
 models/*.h5
 data/*
 !data/digits/.gitkeep

@@ -280,3 +280,7 @@ fetch("/api/health")
     }
   })
   .catch((error) => showStatus(error.message, true));
+
+if (window.isSecureContext && navigator.mediaDevices?.getUserMedia) {
+  startCamera();
+}

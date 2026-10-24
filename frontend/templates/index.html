@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#102b46">
     <title>Bhutanese Sign Language Recognition</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css', v='4') }}">
-    <script src="{{ url_for('static', filename='js/app.js', v='4') }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css', v='5') }}">
+    <script src="{{ url_for('static', filename='js/app.js', v='5') }}" defer></script>
   </head>
   <body>
     <main class="page-shell">
@@ -14,7 +14,7 @@
         <p class="eyebrow">BHUTANESE SIGN LANGUAGE</p>
         <h1>Sign recognition,<br>made simple.</h1>
         <p class="hero-copy">Show a digit sign to your camera. The page adapts to your phone or computer automatically.</p>
-        <div class="device-note"><span class="status-dot"></span> Camera selected automatically by your browser</div>
+        <div class="device-note"><span class="status-dot"></span> Camera starts automatically after you allow access</div>
       </header>
 
       <section class="workspace" aria-label="Sign recognition">
@@ -41,7 +41,7 @@
             <button class="button button-primary" id="camera-button" type="button">Enable camera</button>
             <button class="button button-secondary" id="stop-button" type="button" disabled>Stop camera</button>
           </div>
-          <p class="camera-help" id="camera-help">Allow camera access when your browser asks. You don't need to select a phone or laptop camera.</p>
+          <p class="camera-help" id="camera-help">Allow camera access when your browser asks once. Live predictions start automatically while a sign is in view.</p>
         </div>
 
         <aside class="result-column">

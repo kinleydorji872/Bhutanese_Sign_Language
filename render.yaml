@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: bhutanese-sign-language
+    runtime: python
+    plan: standard
+    buildCommand: pip install -r requirements-ml.txt gunicorn
+    startCommand: gunicorn backend.app:app --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 120
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.7
